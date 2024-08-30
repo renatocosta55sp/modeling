@@ -1,4 +1,4 @@
-module github.org/renatocosta55sp/modeling
+module github.com/renatocosta55sp/modeling
 
 go 1.23.0
 
