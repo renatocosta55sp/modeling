@@ -1,6 +1,6 @@
 package bus
 
-import "github.org/renatocosta55sp/modeling/domain"
+import "github.com/renatocosta55sp/modeling/domain"
 
 type EventResult struct {
 	Event domain.Event

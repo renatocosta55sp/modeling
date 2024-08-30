@@ -3,7 +3,7 @@ package bus
 import (
 	"sync"
 
-	"github.org/renatocosta55sp/modeling/domain"
+	"github.com/renatocosta55sp/modeling/domain"
 )
 
 // EventBus represents the event bus that handles event subscription and dispatching
