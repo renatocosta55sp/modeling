@@ -7,5 +7,5 @@ import (
 )
 
 type EventHandleable interface {
-	Handle(ctx context.Context, event domain.Event) error
+	On(ctx context.Context, event domain.Event) error
 }

@@ -49,7 +49,7 @@ func (el *EventListener) dispatchToHandlers(ctx context.Context, event domain.Ev
 
 			go func(handler EventHandler) {
 
-				err := handler.Handler.Handle(ctx, event)
+				err := handler.Handler.On(ctx, event)
 				eventResult := bus.EventResult{Event: event}
 				if err != nil {
 					eventResult.Err = err
