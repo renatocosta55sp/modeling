@@ -7,7 +7,7 @@ import (
 )
 
 type AggregateRoot struct {
-	AggregateID uuid.NullUUID
+	AggregateID uuid.UUID
 	Version     int8
 	Events      []Event `json:"-"`
 }
