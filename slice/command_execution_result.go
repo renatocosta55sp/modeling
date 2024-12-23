@@ -8,18 +8,18 @@ import (
 	"github.com/renatocosta55sp/modeling/infra/bus"
 )
 
-type GenericCommandHandler struct {
+type CommandExecutionResult struct {
 	CtxCancFunc     context.CancelFunc
 	EventBus        *bus.EventBus
 	EventResultChan chan bus.EventResult
 }
 
-func (g *GenericCommandHandler) Handle(domainEvent []domain.Event) (err error) {
+func (cEr *CommandExecutionResult) Execute(domainEvent []domain.Event) (err error) {
 
-	evPublisher := bus.NewEventPublisher(g.EventBus)
+	evPublisher := bus.NewEventPublisher(cEr.EventBus)
 	evPublisher.Publish(domainEvent)
 
-	eventResult, resultChanOk := <-g.EventResultChan
+	eventResult, resultChanOk := <-cEr.EventResultChan
 
 	if !resultChanOk {
 		err = errors.New("result channel closed")
@@ -28,7 +28,7 @@ func (g *GenericCommandHandler) Handle(domainEvent []domain.Event) (err error) {
 
 	if eventResult.Err != nil {
 		err = eventResult.Err
-		g.CtxCancFunc()
+		cEr.CtxCancFunc()
 		return
 	}
 
