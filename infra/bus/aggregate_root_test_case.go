@@ -8,7 +8,6 @@ import (
 
 type AggregateRootTestCase struct {
 	T              *testing.T
-	eventBus       *EventBus
 	raisedEvents   []string
 	expectedEvents []string
 }
