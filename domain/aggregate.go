@@ -6,6 +6,6 @@ import (
 
 type Aggregate struct {
 	AggregateID       uuid.UUID
-	Version           int8
+	Version           int
 	UncommittedEvents []Event `json:"-"`
 }
