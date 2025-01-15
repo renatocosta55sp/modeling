@@ -7,4 +7,5 @@ type Event struct {
 	Type      string
 	Timestamp time.Time
 	Data      any
+	Metadata  any
 }
