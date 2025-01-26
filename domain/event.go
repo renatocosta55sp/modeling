@@ -1,6 +1,9 @@
 package domain
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 // Event represents a generic event structure
 type Event struct {
@@ -8,4 +11,12 @@ type Event struct {
 	Timestamp time.Time
 	Data      any
 	Metadata  any
+}
+
+func (e *Event) Serialize() ([]byte, error) {
+	return json.Marshal(e)
+}
+
+func (e *Event) Unserialize(data []byte) error {
+	return json.Unmarshal(data, e)
 }
