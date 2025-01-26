@@ -13,10 +13,10 @@ type Event struct {
 	Metadata  any
 }
 
-func (e *Event) Serialize() ([]byte, error) {
-	return json.Marshal(e)
+func (*Event) Serialize(data any) ([]byte, error) {
+	return json.Marshal(data)
 }
 
-func (e *Event) Unserialize(data []byte) error {
-	return json.Unmarshal(data, e)
+func (*Event) Unserialize(dataIn any, data []byte) error {
+	return json.Unmarshal(data, dataIn)
 }
