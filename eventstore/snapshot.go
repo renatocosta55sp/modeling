@@ -1,4 +1,4 @@
-package eventsourcing
+package eventstore
 
 import "github.com/renatocosta55sp/modeling/domain"
 
