@@ -1,5 +1,7 @@
 package bus2
 
-type EventHandler[T Event] interface {
+import "github.com/renatocosta55sp/modeling/domain"
+
+type EventHandler[T domain.Event] interface {
 	Handle(event T) error
 }
