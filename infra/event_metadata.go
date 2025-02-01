@@ -5,5 +5,4 @@ type EventMetadata struct {
 	IpAddr        string
 	CorrelationId string
 	Source        string
-	Timestamp     string
 }
