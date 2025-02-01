@@ -1,4 +1,4 @@
-package bus2
+package bus
 
 import (
 	"fmt"
@@ -21,7 +21,7 @@ func NewEventDispatcher() *EventDispatcher {
 // RegisterHandler registers an event handler for a specific event type.
 func RegisterHandler[T domain.Event](dispatcher *EventDispatcher, handler EventHandler[T]) {
 	var event T // Create a zero-value instance of T to get the event name
-	eventName := event.EventName()
+	eventName := event.GetName()
 	dispatcher.handlers[eventName] = func(event domain.Event) error {
 		return handler.Handle(event.(T))
 	}
@@ -29,10 +29,10 @@ func RegisterHandler[T domain.Event](dispatcher *EventDispatcher, handler EventH
 
 // Dispatch dispatches an event to its registered handler.
 func (d *EventDispatcher) Dispatch(event domain.Event) error {
-	if handler, ok := d.handlers[event.EventName()]; ok {
+	if handler, ok := d.handlers[event.GetName()]; ok {
 		return handler(event)
 	}
-	return fmt.Errorf("no handler registered for event: %s", event.EventName())
+	return fmt.Errorf("no handler registered for event: %s", event.GetName())
 }
 
 func (d *EventDispatcher) DispatchUncommittedEvents(events []domain.Event) error {
