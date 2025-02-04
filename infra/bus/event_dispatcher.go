@@ -2,7 +2,6 @@ package bus
 
 import (
 	"fmt"
-	"reflect"
 
 	"github.com/renatocosta55sp/modeling/domain"
 )
@@ -21,10 +20,8 @@ func NewEventDispatcher() *EventDispatcher {
 
 // RegisterHandler registers an event handler for a specific event type.
 func RegisterHandler[T domain.Event](dispatcher *EventDispatcher, handler EventHandler[T]) {
-
-	eventType := reflect.TypeOf((*T)(nil)).Elem() // Get the concrete type of T
-	eventName := eventType.Name()
-
+	var event T // Create a zero-value instance of T to get the event name
+	eventName := event.GetName()
 	dispatcher.handlers[eventName] = func(event domain.Event) error {
 		return handler.Handle(event.(T))
 	}
