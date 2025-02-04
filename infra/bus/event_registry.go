@@ -1,9 +1,11 @@
-package domain
+package bus
 
 import (
 	"encoding/json"
 	"fmt"
 	"reflect"
+
+	"github.com/renatocosta55sp/modeling/domain"
 )
 
 // EventRegistry is a component responsible for managing event types and creating event instances.
@@ -24,7 +26,7 @@ func (r *EventRegistry) RegisterEvents(events map[string]reflect.Type) {
 }
 
 // CreateEvent creates a new instance of the event based on the event type and unmarshals the payload.
-func (r *EventRegistry) CreateEvent(eventType string, payload []byte) (Event, error) {
+func (r *EventRegistry) CreateEvent(eventType string, payload []byte) (domain.Event, error) {
 	eventTypeInstance, ok := r.typeMap[eventType]
 	if !ok {
 		return nil, fmt.Errorf("unknown event type: %s", eventType)
@@ -39,7 +41,7 @@ func (r *EventRegistry) CreateEvent(eventType string, payload []byte) (Event, er
 	}
 
 	// Cast the event to domain.Event
-	if domainEvent, ok := event.(Event); ok {
+	if domainEvent, ok := event.(domain.Event); ok {
 		return domainEvent, nil
 	}
 
