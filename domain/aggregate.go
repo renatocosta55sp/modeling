@@ -7,5 +7,5 @@ import (
 type Aggregate struct {
 	AggregateID       uuid.UUID
 	Version           int
-	UncommittedEvents []Event `json:"-"`
+	UncommittedEvents []*Event `json:"-"`
 }
