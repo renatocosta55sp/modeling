@@ -15,6 +15,6 @@ func ShouldTakeSnapshot(agg *domain.Aggregate, frequency int) bool {
 }
 
 type SnapshotStore interface {
-	WriteSnapshot(ctx context.Context, streamId string, event any, version int, eventType string, metaData any, eventIdentifier string) error
+	WriteSnapshot(ctx context.Context, streamId string, event domain.Event, version int) error
 	ReadSnapshot(ctx context.Context, streamID string) (domain.Event, error)
 }
