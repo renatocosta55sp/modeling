@@ -11,6 +11,6 @@ var ErrConcurrencyConflict = errors.New("concurrency conflict: event version mis
 
 type EventStore interface {
 	AppendToStream(ctx context.Context, streamId string, newEvents []domain.Event, expectedVersion int) error
-	ReadStream(ctx context.Context, streamID string) ([]domain.Event, error)
+	ReadStream(ctx context.Context, streamID string, version int) ([]domain.Event, error)
 	ReadAllStream(ctx context.Context) ([]domain.Event, error)
 }
