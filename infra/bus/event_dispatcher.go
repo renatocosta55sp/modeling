@@ -6,31 +6,32 @@ import (
 	"github.com/renatocosta55sp/modeling/domain"
 )
 
-// EventDispatcher is responsible for dispatching events to their respective handlers.
 type EventDispatcher struct {
-	handlers map[string]func(domain.Event) error
+	handlers map[string][]func(domain.Event) error
 }
 
-// NewEventDispatcher creates a new EventDispatcher.
 func NewEventDispatcher() *EventDispatcher {
 	return &EventDispatcher{
-		handlers: make(map[string]func(domain.Event) error),
+		handlers: make(map[string][]func(domain.Event) error),
 	}
 }
 
-// RegisterHandler registers an event handler for a specific event type.
 func RegisterHandler[T domain.Event](dispatcher *EventDispatcher, handler EventHandler[T]) {
-	var event T // Create a zero-value instance of T to get the event name
+	var event T
 	eventName := event.GetName()
-	dispatcher.handlers[eventName] = func(event domain.Event) error {
+	dispatcher.handlers[eventName] = append(dispatcher.handlers[eventName], func(event domain.Event) error {
 		return handler.Handle(event.(T))
-	}
+	})
 }
 
-// Dispatch dispatches an event to its registered handler.
 func (d *EventDispatcher) Dispatch(event domain.Event) error {
-	if handler, ok := d.handlers[event.GetName()]; ok {
-		return handler(event)
+	if handlers, ok := d.handlers[event.GetName()]; ok {
+		for _, handler := range handlers {
+			if err := handler(event); err != nil {
+				return err
+			}
+		}
+		return nil
 	}
 	return fmt.Errorf("no handler registered for event: %s", event.GetName())
 }
